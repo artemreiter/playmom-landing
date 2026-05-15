@@ -9,6 +9,8 @@
 <meta property="og:description" content="2000+ пошаговых игр для детей от 0 до 6 лет. Всего 5–10 минут в день.">
 <meta property="og:image" content="logo.png">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://playmom.app">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="logo.png" type="image/png">
 <style>
   :root {
@@ -331,5 +333,16 @@
   <p>&copy; 2026 PlayMom &middot; <a href="https://artemreiter.github.io/playmom-legal/">Политика конфиденциальности</a></p>
 </footer>
 
+<script>
+(function() {
+  var ua = navigator.userAgent || '';
+  if (/BytedanceWebview|TikTok|musical_ly/i.test(ua)) {
+    var bar = document.createElement('div');
+    bar.style.cssText = 'position:fixed;bottom:0;left:0;right:0;padding:16px 24px;background:#1a1714;color:#fff;text-align:center;z-index:9999;font-size:15px;';
+    bar.innerHTML = '<div style="margin-bottom:8px">TikTok ограничивает ссылки</div><a href="https://playmom.app" target="_blank" rel="noopener" style="display:inline-block;padding:12px 32px;background:#3a8a5c;color:#fff;border-radius:12px;text-decoration:none;font-weight:600">Открыть в браузере</a>';
+    document.body.appendChild(bar);
+  }
+})();
+</script>
 </body>
 </html>
