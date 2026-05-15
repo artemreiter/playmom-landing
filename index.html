@@ -337,10 +337,16 @@
 (function() {
   var ua = navigator.userAgent || '';
   if (/BytedanceWebview|TikTok|musical_ly/i.test(ua)) {
-    var bar = document.createElement('div');
-    bar.style.cssText = 'position:fixed;bottom:0;left:0;right:0;padding:16px 24px;background:#1a1714;color:#fff;text-align:center;z-index:9999;font-size:15px;';
-    bar.innerHTML = '<div style="margin-bottom:8px">TikTok ограничивает ссылки</div><a href="https://playmom.app" target="_blank" rel="noopener" style="display:inline-block;padding:12px 32px;background:#3a8a5c;color:#fff;border-radius:12px;text-decoration:none;font-weight:600">Открыть в браузере</a>';
-    document.body.appendChild(bar);
+    var overlay = document.createElement('div');
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(26,23,20,0.95);z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px;';
+    overlay.innerHTML = '<div style="text-align:center;color:#fff;max-width:340px;">'
+      + '<img src="logo.png" style="width:80px;height:80px;border-radius:20px;margin-bottom:24px;" alt="PlayMom">'
+      + '<div style="font-size:22px;font-weight:600;margin-bottom:12px;font-family:Palatino,Georgia,serif;">PlayMom</div>'
+      + '<div style="font-size:16px;color:#b0a89c;line-height:1.5;margin-bottom:32px;">TikTok не позволяет открывать ссылки. Нажмите <strong style="color:#fff;">&#8942;</strong> справа внизу и выберите</div>'
+      + '<div style="display:inline-block;padding:14px 28px;background:#fff;color:#1a1714;border-radius:12px;font-size:16px;font-weight:600;">&#127760;&ensp;Открыть в браузере</div>'
+      + '<div style="margin-top:16px;font-size:13px;color:#6b6258;">&#8593; Нажмите эту кнопку в меню TikTok</div>'
+      + '</div>';
+    document.body.appendChild(overlay);
   }
 })();
 </script>
