@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PlayMom — Развивающие игры для занятых родителей</title>
+<meta name="description" content="2000+ пошаговых игр для детей от 0 до 6 лет. Всего 5–10 минут в день. Без подготовки и сложностей.">
+<meta property="og:title" content="PlayMom — Развивающие игры для занятых родителей">
+<meta property="og:description" content="2000+ пошаговых игр для детей от 0 до 6 лет. Всего 5–10 минут в день.">
+<meta property="og:image" content="logo.png">
+<meta property="og:type" content="website">
+<link rel="icon" href="logo.png" type="image/png">
+<style>
+  :root {
+    --paper: #f6f2e9;
+    --paper-dark: #eee7d7;
+    --ink: #1a1714;
+    --ink-muted: #6b6258;
+    --accent: #3a8a5c;
+    --accent-hover: #2e7049;
+    --rule: #d9cfb8;
+    --peach: #f5c8a8;
+    --peach-soft: #fdf0e6;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+    line-height: 1.55;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3 {
+    font-family: "Iowan Old Style", "Palatino", Georgia, serif;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 60px 24px 80px;
+    position: relative;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 120px;
+    background: linear-gradient(to bottom, transparent, var(--paper));
+    pointer-events: none;
+  }
+
+  .logo {
+    width: 120px;
+    height: 120px;
+    border-radius: 28px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04);
+    margin-bottom: 32px;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  .hero h1 {
+    font-size: clamp(36px, 7vw, 56px);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 16px;
+  }
+
+  .hero h1 span {
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    font-size: clamp(17px, 3vw, 21px);
+    color: var(--ink-muted);
+    max-width: 480px;
+    margin: 0 auto 40px;
+    line-height: 1.5;
+  }
+
+  /* App Store badge */
+  .app-store-link {
+    display: inline-block;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border-radius: 14px;
+  }
+
+  .app-store-link:hover {
+    transform: scale(1.05);
+  }
+
+  .app-store-link:active {
+    transform: scale(0.98);
+  }
+
+  .app-store-link img {
+    height: 60px;
+    display: block;
+  }
+
+  /* Screenshots carousel */
+  .screens {
+    padding: 80px 0;
+    overflow: hidden;
+  }
+
+  .screens h2 {
+    text-align: center;
+    font-size: clamp(24px, 5vw, 36px);
+    margin-bottom: 48px;
+    letter-spacing: -0.02em;
+  }
+
+  .screens-track {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    padding: 0 24px;
+    flex-wrap: wrap;
+  }
+
+  .screens-track img {
+    width: 260px;
+    border-radius: 20px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.04);
+    transition: transform 0.3s ease;
+  }
+
+  .screens-track img:hover {
+    transform: translateY(-8px);
+  }
+
+  /* Features */
+  .features {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+
+  .feature {
+    padding: 28px;
+    background: var(--paper-dark);
+    border-radius: 16px;
+    border: 1px solid var(--rule);
+  }
+
+  .feature-icon {
+    font-size: 28px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .feature h3 {
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+
+  .feature p {
+    font-size: 14px;
+    color: var(--ink-muted);
+    line-height: 1.5;
+  }
+
+  /* Bottom CTA */
+  .bottom-cta {
+    text-align: center;
+    padding: 60px 24px 100px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .bottom-cta h2 {
+    font-size: clamp(24px, 5vw, 36px);
+    margin-bottom: 12px;
+    letter-spacing: -0.02em;
+  }
+
+  .bottom-cta p {
+    color: var(--ink-muted);
+    margin-bottom: 32px;
+    font-size: 17px;
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 24px;
+    font-size: 13px;
+    color: var(--ink-muted);
+    border-top: 1px solid var(--rule);
+  }
+
+  footer a {
+    color: var(--ink-muted);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  @media (max-width: 600px) {
+    .features {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .screens-track img {
+      width: 220px;
+    }
+
+    .logo {
+      width: 96px;
+      height: 96px;
+      border-radius: 22px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <img src="logo.png" alt="PlayMom" class="logo">
+  <h1>Играй с ребёнком<br><span>осознанно</span></h1>
+  <p class="hero-sub">2000+ пошаговых развивающих игр для детей от 0 до 6 лет. Всего 5–10 минут в день, без подготовки.</p>
+  <a href="https://apps.apple.com/app/id6759934367" class="app-store-link" aria-label="Скачать в App Store">
+    <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/ru-ru?size=250x83" alt="Download on the App Store">
+  </a>
+</section>
+
+<section class="screens">
+  <h2>Как это выглядит</h2>
+  <div class="screens-track">
+    <img src="screen1.png" alt="Главный экран PlayMom" loading="lazy">
+    <img src="screen2.png" alt="Пошаговая игра" loading="lazy">
+    <img src="screen3.png" alt="Развитие по возрасту" loading="lazy">
+  </div>
+</section>
+
+<section class="features">
+  <div class="feature">
+    <span class="feature-icon">5</span>
+    <h3>Минут в день</h3>
+    <p>Короткие игры, которые вписываются в любой день занятого родителя.</p>
+  </div>
+  <div class="feature">
+    <span class="feature-icon">2000+</span>
+    <h3>Игр и активностей</h3>
+    <p>Каталог постоянно растёт. Мышление, моторика, речь, внимание.</p>
+  </div>
+  <div class="feature">
+    <span class="feature-icon">0–6</span>
+    <h3>Лет</h3>
+    <p>Игры подобраны под возраст вашего ребёнка. Всё по науке.</p>
+  </div>
+  <div class="feature">
+    <span class="feature-icon">0</span>
+    <h3>Подготовки</h3>
+    <p>Никаких материалов для покупки. Играйте тем, что уже есть дома.</p>
+  </div>
+</section>
+
+<section class="bottom-cta">
+  <h2>Начните сегодня</h2>
+  <p>Бесплатно в App Store</p>
+  <a href="https://apps.apple.com/app/id6759934367" class="app-store-link" aria-label="Скачать в App Store">
+    <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/ru-ru?size=250x83" alt="Download on the App Store">
+  </a>
+</section>
+
+<footer>
+  <p>&copy; 2026 PlayMom &middot; <a href="https://artemreiter.github.io/playmom-legal/">Политика конфиденциальности</a></p>
+</footer>
+
+</body>
+</html>
