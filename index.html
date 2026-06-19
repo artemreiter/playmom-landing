@@ -131,22 +131,27 @@
     display: block;
   }
 
-  .android-soon {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 12px 24px;
-    background: var(--paper-dark);
-    border: 1px solid var(--rule);
+  .google-play-link {
+    display: inline-block;
+    transition: transform 0.2s ease;
     border-radius: 14px;
-    font-size: 15px;
-    color: var(--ink-muted);
   }
 
-  .android-soon svg {
-    width: 24px;
-    height: 24px;
-    flex-shrink: 0;
+  .google-play-link:hover {
+    transform: scale(1.05);
+  }
+
+  .google-play-link:active {
+    transform: scale(0.98);
+  }
+
+  .google-play-link img {
+    /* Google's badge has built-in transparent padding, so it needs more height
+       than the App Store badge to read as the same visual size. The negative
+       margin trims that padding to keep the column gap even. */
+    height: 84px;
+    display: block;
+    margin: -12px 0;
   }
 
   .tiktok-hint {
@@ -285,10 +290,9 @@
     <a href="https://apps.apple.com/app/id6759934367" class="app-store-link" aria-label="Скачать в App Store">
       <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/ru-ru?size=250x83" alt="Download on the App Store">
     </a>
-    <div class="android-soon">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.523 2.237a.4.4 0 0 0-.544.157l-1.406 2.433A8.067 8.067 0 0 0 12 4.073a8.067 8.067 0 0 0-3.573.754L7.021 2.394a.4.4 0 1 0-.7.387l1.39 2.406A7.598 7.598 0 0 0 4 11.2h16a7.598 7.598 0 0 0-3.711-6.013l1.39-2.406a.4.4 0 0 0-.156-.544zM8.8 9.6a.8.8 0 1 1 0-1.6.8.8 0 0 1 0 1.6zm6.4 0a.8.8 0 1 1 0-1.6.8.8 0 0 1 0 1.6zM4 12.8v6.4a1.6 1.6 0 0 0 1.6 1.6h1.6v2.4a1.2 1.2 0 0 0 2.4 0v-2.4h4.8v2.4a1.2 1.2 0 0 0 2.4 0v-2.4h1.6a1.6 1.6 0 0 0 1.6-1.6v-6.4H4zm-2.4 0a1.2 1.2 0 0 0-1.2 1.2v4a1.2 1.2 0 0 0 2.4 0v-4a1.2 1.2 0 0 0-1.2-1.2zm20.8 0a1.2 1.2 0 0 0-1.2 1.2v4a1.2 1.2 0 0 0 2.4 0v-4a1.2 1.2 0 0 0-1.2-1.2z"/></svg>
-      Android — скоро
-    </div>
+    <a href="https://play.google.com/store/apps/details?id=com.vibecode.fivequiteminutes" class="google-play-link" aria-label="Скачать в Google Play">
+      <img src="https://play.google.com/intl/ru_ru/badges/static/images/badges/ru_badge_web_generic.png" alt="Доступно в Google Play">
+    </a>
     <p class="tiktok-hint">Если кнопка не открывается, нажмите <strong>&#8943;</strong> справа вверху и выберите «Открыть в браузере», либо найдите <strong>PlayMom</strong> в App Store.</p>
   </div>
 </section>
@@ -327,15 +331,14 @@
 
 <section class="bottom-cta">
   <h2>Начните сегодня</h2>
-  <p>Бесплатно в App Store. Скоро и на Android.</p>
+  <p>Бесплатно в App Store и Google Play.</p>
   <div class="store-badges">
     <a href="https://apps.apple.com/app/id6759934367" class="app-store-link" aria-label="Скачать в App Store">
       <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/ru-ru?size=250x83" alt="Download on the App Store">
     </a>
-    <div class="android-soon">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.523 2.237a.4.4 0 0 0-.544.157l-1.406 2.433A8.067 8.067 0 0 0 12 4.073a8.067 8.067 0 0 0-3.573.754L7.021 2.394a.4.4 0 1 0-.7.387l1.39 2.406A7.598 7.598 0 0 0 4 11.2h16a7.598 7.598 0 0 0-3.711-6.013l1.39-2.406a.4.4 0 0 0-.156-.544zM8.8 9.6a.8.8 0 1 1 0-1.6.8.8 0 0 1 0 1.6zm6.4 0a.8.8 0 1 1 0-1.6.8.8 0 0 1 0 1.6zM4 12.8v6.4a1.6 1.6 0 0 0 1.6 1.6h1.6v2.4a1.2 1.2 0 0 0 2.4 0v-2.4h4.8v2.4a1.2 1.2 0 0 0 2.4 0v-2.4h1.6a1.6 1.6 0 0 0 1.6-1.6v-6.4H4zm-2.4 0a1.2 1.2 0 0 0-1.2 1.2v4a1.2 1.2 0 0 0 2.4 0v-4a1.2 1.2 0 0 0-1.2-1.2zm20.8 0a1.2 1.2 0 0 0-1.2 1.2v4a1.2 1.2 0 0 0 2.4 0v-4a1.2 1.2 0 0 0-1.2-1.2z"/></svg>
-      Android — скоро
-    </div>
+    <a href="https://play.google.com/store/apps/details?id=com.vibecode.fivequiteminutes" class="google-play-link" aria-label="Скачать в Google Play">
+      <img src="https://play.google.com/intl/ru_ru/badges/static/images/badges/ru_badge_web_generic.png" alt="Доступно в Google Play">
+    </a>
   </div>
 </section>
 
