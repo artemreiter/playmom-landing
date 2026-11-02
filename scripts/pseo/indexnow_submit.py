@@ -30,21 +30,28 @@ def find_key():
     return keys[0].stem
 
 
-def collect_urls():
+def collect_urls(game_pages_only=False):
     urls = []
     for f in sorted(DIST.glob("sitemap-*.xml")):
         text = f.read_text(encoding="utf-8")
         urls.extend(re.findall(r"<loc>([^<]+)</loc>", text))
+    if game_pages_only:
+        # Game pages are /{lang}/{games}/{slug}/ (3 path segments); hub
+        # pages add a 4th segment (age|goal word + value) and the home
+        # page is just /{lang}/. Filters to the pages whose HTML actually
+        # changed when the paywall lock shipped.
+        urls = [u for u in urls if len([s for s in u.split("/")[3:] if s]) == 3]
     return urls
 
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--send", action="store_true", help="actually submit to IndexNow")
+    parser.add_argument("--game-pages-only", action="store_true", help="submit only game pages, not hubs/home")
     args = parser.parse_args()
 
     key = find_key()
-    urls = collect_urls()
+    urls = collect_urls(args.game_pages_only)
     key_location = f"https://{HOST}/{key}.txt"
     payload = {"host": HOST, "key": key, "keyLocation": key_location, "urlList": urls}
 
