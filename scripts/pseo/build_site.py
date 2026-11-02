@@ -13,16 +13,20 @@ import sys
 HERE = pathlib.Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 
-from data_loader import build_games, load_editorial, load_ids, load_metadata, siblings_for
+from data_loader import (
+    build_games, load_editorial, load_guest_preview_ids, load_ids,
+    load_metadata, siblings_for,
+)
 from slugify import short_id, slugify
 from ui_strings import (
     AGE_BAND_LABEL, AGE_BANDS, AGE_WORD, CATEGORY_LABEL, CATEGORY_ORDER,
-    CATEGORY_SLUG, CONTEXT_LABEL, GAMES_WORD, GOAL_WORD, LANGS, MINUTES_LABEL,
-    MONTHS_LABEL, SITE_NAME, UI, YEARS_LABEL,
+    CATEGORY_SLUG, CONTEXT_LABEL, GAMES_WORD, GOAL_WORD, LANGS,
+    LOCKED_MORE_STEPS, LOCKED_SUBSCRIPTION_LINE, MINUTES_LABEL, MONTHS_LABEL,
+    SITE_NAME, UI, YEARS_LABEL, step_word,
 )
 from templates import (
     SITE_ORIGIN, breadcrumb, breadcrumb_jsonld, cta_block, esc, footer,
-    html_head, howto_jsonld, nav_header, page_shell,
+    html_head, howto_jsonld, locked_card, nav_header, page_shell,
 )
 
 DIST = HERE.parent / "dist"
@@ -68,17 +72,24 @@ def game_badges(lang, game, age_hub_url, goal_hub_url):
     return '<div class="badges">' + "".join(chips) + "</div>\n"
 
 
-def render_game_page(lang, game, url_maps):
+def render_game_page(lang, game, url_maps, preview_ids):
     gid = game["id"]
     text = game["text"][lang]
     meta = game["meta"]
     title = text["title"]
     mini = text["miniDescription"]
     short_desc = text["shortDescription"]
-    steps = text["quickStart"]["steps"]
+    all_steps = text["quickStart"]["steps"]
     setup = text["quickStart"]["setup"]
     safety = text["quickStart"]["safety"]
     materials = text.get("materials") or []
+
+    # Same free tier as the app: guests only ever see the games flagged
+    # guestPreview in the editorial manifest in full; every other game
+    # shows step 1 and locks the rest behind the App Store CTA.
+    unlocked = gid in preview_ids
+    visible_steps = all_steps if unlocked else all_steps[:1]
+    hidden_count = 0 if unlocked else max(len(all_steps) - 1, 0)
 
     band = primary_band(game)
     cat = meta["categoryType"]
@@ -105,7 +116,7 @@ def render_game_page(lang, game, url_maps):
         (title, canonical),
     ])
 
-    steps_html = "".join(f"<li>{esc(s)}</li>" for s in steps)
+    steps_html = "".join(f"<li>{esc(s)}</li>" for s in visible_steps)
     materials_html = "".join(f"<li>{esc(m)}</li>" for m in materials)
     safety_html = "".join(f"<p>{esc(s)}</p>" for s in safety)
 
@@ -121,24 +132,36 @@ def render_game_page(lang, game, url_maps):
         if related_links else ""
     )
 
+    setup_html = (
+        f"<h2>{esc(UI['setup_heading'][lang])}</h2><p>{esc(setup)}</p>"
+        if unlocked else ""
+    )
+    if unlocked:
+        lock_html = ""
+    else:
+        more_steps_text = LOCKED_MORE_STEPS[lang].format(n=hidden_count, word=step_word(lang, hidden_count))
+        lock_html = locked_card(lang, more_steps_text, LOCKED_SUBSCRIPTION_LINE[lang], "seo_locked")
+
     main_html = f"""<article class="game">
 <h1>{esc(title)}</h1>
 {game_badges(lang, game, age_hub_url, goal_hub_url)}
 <p class="lead">{esc(short_desc)}</p>
 <img src="{esc(meta['imageUrl'])}" width="1008" height="1008" alt="{esc(title)}" loading="eager">
-<h2>{esc(UI['setup_heading'][lang])}</h2>
-<p>{esc(setup)}</p>
+{setup_html}
 <h2>{esc(UI['steps_heading'][lang])}</h2>
 <ol class="steps">{steps_html}</ol>
+{lock_html}
 {"<h2>" + esc(UI["materials_heading"][lang]) + "</h2><ul class=\"materials\">" + materials_html + "</ul>" if materials else ""}
 <h2>{esc(UI['safety_heading'][lang])}</h2>
 <div class="safety">{safety_html}</div>
 {related_html}
 </article>
 """
-    jsonld = howto_jsonld(title, short_desc, meta["imageUrl"], materials, steps, meta.get("totalMinutes") or meta.get("estimatedMinutes")) + crumb_jsonld
-    cta = cta_block(lang, "seo_game")
-    return page_shell(lang, head, header, crumbs, main_html, cta, footer(lang), jsonld)
+    jsonld = howto_jsonld(title, short_desc, meta["imageUrl"], materials, visible_steps, meta.get("totalMinutes") or meta.get("estimatedMinutes")) + crumb_jsonld
+    # Locked pages carry their own App Store CTA in the locked card; skip
+    # the generic bottom CTA so the page doesn't show two buttons.
+    bottom = "" if not unlocked else cta_block(lang, "seo_game")
+    return page_shell(lang, head, header, crumbs, main_html, bottom, footer(lang), jsonld)
 
 
 def render_age_hub(lang, band_key, games_in_band, url_maps):
@@ -340,12 +363,16 @@ def main():
     all_games = build_games(ids, editorial, metadata)
     print(f"loaded {len(all_games)} games")
 
+    preview_ids = load_guest_preview_ids()
+    unlocked_in_set = [g["id"] for g in all_games if g["id"] in preview_ids]
+    print(f"guestPreview ids in manifest: {len(preview_ids)}; present in this batch: {len(unlocked_in_set)}")
+
     url_maps = build_url_maps(all_games)
 
     counts = {lang: 0 for lang in LANGS}
     for lang in LANGS:
         for g in all_games:
-            html_out = render_game_page(lang, g, url_maps)
+            html_out = render_game_page(lang, g, url_maps, preview_ids)
             write_page(url_maps["game"][lang][g["id"]], html_out)
             counts[lang] += 1
 

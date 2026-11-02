@@ -14,8 +14,20 @@ CATALOG_DIR = pathlib.Path("/Users/artemreiter/playmom-v2-work/catalog")
 EDITORIAL_DIR = pathlib.Path(
     "/Users/artemreiter/playmom-wt/integration/backend/prisma/editorial/locales"
 )
+MANIFEST_PATH = pathlib.Path(
+    "/Users/artemreiter/playmom-wt/integration/backend/prisma/editorial/manifest.json"
+)
 HERE = pathlib.Path(__file__).resolve().parent
 META_DIR = HERE.parent / "data" / "meta"
+
+
+def load_guest_preview_ids():
+    """Activity ids the app shows fully to guests for free (same flag the
+    app's own access control reads: manifest.json -> activities[].guestPreview).
+    """
+    with open(MANIFEST_PATH, encoding="utf-8") as fh:
+        manifest = json.load(fh)
+    return {a["activityId"] for a in manifest["activities"] if a.get("guestPreview")}
 
 
 def load_ids():

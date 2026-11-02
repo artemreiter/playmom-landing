@@ -88,6 +88,16 @@ def cta_block(lang, ct_token, heading=None):
 """
 
 
+def locked_card(lang, more_steps_text, subscription_line, ct_token):
+    url = f"{APP_STORE_URL}?ct={ct_token}"
+    return f"""<div class="locked-card">
+  <p class="locked-steps">{esc(more_steps_text)}</p>
+  <p class="locked-sub">{esc(subscription_line)}</p>
+  <a href="{url}" class="cta-button">{esc(UI['cta_button'][lang])}</a>
+</div>
+"""
+
+
 def footer(lang):
     return f"""<footer class="site-footer">
   <p>&copy; 2026 {SITE_NAME} &middot; <a href="https://artemreiter.github.io/playmom-legal/">Privacy</a> &middot; <a href="/">playmom.app</a></p>

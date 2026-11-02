@@ -89,6 +89,64 @@ MONTHS_LABEL = {"ru": "мес", "uk": "міс", "pl": "mies", "en": "months", "d
 YEARS_LABEL = {"ru": "лет", "uk": "р", "pl": "lat", "en": "years", "de": "Jahre", "es": "años", "fr": "ans", "it": "anni", "ro": "ani"}
 MINUTES_LABEL = {"ru": "мин", "uk": "хв", "pl": "min", "en": "min", "de": "Min.", "es": "min", "fr": "min", "it": "min", "ro": "min"}
 
+# word forms for "step" used in the locked-card message. ru/uk/pl are
+# (one, few, many) Slavic triples; the rest are (singular, plural).
+STEP_WORD_FORMS = {
+    "ru": ("шаг", "шага", "шагов"),
+    "uk": ("крок", "кроки", "кроків"),
+    "pl": ("krok", "kroki", "kroków"),
+    "en": ("step", "steps"),
+    "de": ("Schritt", "Schritte"),
+    "es": ("paso", "pasos"),
+    "fr": ("étape", "étapes"),
+    "it": ("passaggio", "passaggi"),
+    "ro": ("pas", "pași"),
+}
+
+
+def _slavic_plural(n: int, one: str, few: str, many: str) -> str:
+    n = abs(n)
+    if n % 10 == 1 and n % 100 != 11:
+        return one
+    if 2 <= n % 10 <= 4 and not (12 <= n % 100 <= 14):
+        return few
+    return many
+
+
+def step_word(lang: str, n: int) -> str:
+    forms = STEP_WORD_FORMS[lang]
+    if lang in ("ru", "uk", "pl"):
+        return _slavic_plural(n, *forms)
+    singular, plural = forms
+    return singular if abs(n) == 1 else plural
+
+
+# "{n} more steps in the PlayMom app" — {n} and {word} are filled in code.
+LOCKED_MORE_STEPS = {
+    "ru": "Ещё {n} {word} в приложении PlayMom",
+    "uk": "Ще {n} {word} у застосунку PlayMom",
+    "pl": "Jeszcze {n} {word} w aplikacji PlayMom",
+    "en": "{n} more {word} in the PlayMom app",
+    "de": "Noch {n} {word} in der PlayMom App",
+    "es": "{n} {word} más en la app PlayMom",
+    "fr": "Encore {n} {word} dans l'application PlayMom",
+    "it": "Altri {n} {word} nell'app PlayMom",
+    "ro": "Încă {n} {word} în aplicația PlayMom",
+}
+
+# matches the app's free tier: 2 free unlocks, then a paywall with a trial.
+LOCKED_SUBSCRIPTION_LINE = {
+    "ru": "2 игры бесплатно, дальше по подписке с пробным периодом",
+    "uk": "2 гри безкоштовно, далі за підпискою з пробним періодом",
+    "pl": "2 zabawy bezpłatnie, dalej w ramach abonamentu z okresem próbnym",
+    "en": "2 games free, then by subscription with a trial period",
+    "de": "2 Spiele kostenlos, danach im Abo mit Testphase",
+    "es": "2 juegos gratis, luego con suscripción y periodo de prueba",
+    "fr": "2 jeux gratuits, puis par abonnement avec une période d'essai",
+    "it": "2 giochi gratis, poi in abbonamento con periodo di prova",
+    "ro": "2 jocuri gratuite, apoi prin abonament cu perioadă de probă",
+}
+
 # Generic UI strings
 UI = {
     "home_breadcrumb": {"ru": "Главная", "uk": "Головна", "pl": "Strona główna", "en": "Home", "de": "Startseite", "es": "Inicio", "fr": "Accueil", "it": "Home", "ro": "Acasă"},

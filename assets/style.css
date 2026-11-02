@@ -150,6 +150,30 @@ article.game img {
 
 .safety p:last-child { margin-bottom: 0; }
 
+.locked-card {
+  background: var(--paper-dark);
+  border: 1px solid var(--accent);
+  border-radius: 12px;
+  padding: 18px 16px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.locked-steps {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.locked-sub {
+  font-size: 13px;
+  color: var(--ink-muted);
+  margin-bottom: 14px;
+}
+
+.locked-card .cta-button {
+  display: inline-block;
+}
+
 .related-grid, .chip-row {
   display: flex;
   flex-wrap: wrap;
