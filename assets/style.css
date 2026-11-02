@@ -1,0 +1,233 @@
+:root {
+  --paper: #f6f2e9;
+  --paper-dark: #eee7d7;
+  --ink: #1a1714;
+  --ink-muted: #6b6258;
+  --accent: #3a8a5c;
+  --accent-hover: #2e7049;
+  --rule: #d9cfb8;
+  --peach: #f5c8a8;
+  --peach-soft: #fdf0e6;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+  line-height: 1.55;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+body { overflow-x: hidden; }
+
+h1, h2, h3 {
+  font-family: "Iowan Old Style", "Palatino", Georgia, serif;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--accent-hover); text-decoration: underline; }
+
+/* Header */
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--rule);
+  flex-wrap: wrap;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "Iowan Old Style", "Palatino", Georgia, serif;
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--ink);
+}
+
+.brand img { border-radius: 8px; }
+
+.lang-switch {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: 13px;
+}
+
+.lang-switch a { color: var(--ink-muted); }
+.lang-switch a.lang-current { color: var(--accent); font-weight: 600; }
+
+/* Main content */
+main {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 24px 20px 48px;
+}
+
+.breadcrumb {
+  font-size: 13px;
+  color: var(--ink-muted);
+  margin-bottom: 16px;
+}
+
+.breadcrumb a { color: var(--ink-muted); }
+
+h1 {
+  font-size: clamp(26px, 6vw, 38px);
+  margin-bottom: 12px;
+}
+
+h2 {
+  font-size: clamp(20px, 4vw, 26px);
+  margin: 28px 0 12px;
+}
+
+h3 {
+  font-size: 18px;
+  margin: 20px 0 8px;
+}
+
+.lead {
+  font-size: 17px;
+  color: var(--ink-muted);
+  margin-bottom: 16px;
+}
+
+p { margin-bottom: 12px; }
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--paper-dark);
+  border: 1px solid var(--rule);
+  font-size: 13px;
+  color: var(--ink);
+}
+
+.badge-muted { color: var(--ink-muted); }
+
+article.game img {
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+  border-radius: 16px;
+  display: block;
+  margin: 8px auto 20px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+}
+
+.steps, .materials {
+  padding-left: 24px;
+  margin-bottom: 16px;
+}
+
+.steps li, .materials li { margin-bottom: 8px; }
+
+.safety {
+  background: var(--peach-soft);
+  border: 1px solid var(--peach);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+}
+
+.safety p:last-child { margin-bottom: 0; }
+
+.related-grid, .chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 12px 0 24px;
+}
+
+.related-card, .chip {
+  display: inline-block;
+  padding: 8px 14px;
+  border-radius: 10px;
+  background: var(--paper-dark);
+  border: 1px solid var(--rule);
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.hub-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+}
+
+.hub-list li {
+  font-size: 15px;
+}
+
+.hub-list .muted {
+  color: var(--ink-muted);
+  font-size: 13px;
+}
+
+/* CTA */
+.cta-block {
+  text-align: center;
+  padding: 32px 0;
+  margin-top: 24px;
+  border-top: 1px solid var(--rule);
+}
+
+.cta-block h2 { margin-top: 0; }
+
+.cta-button {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  padding: 14px 28px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.cta-button:hover {
+  background: var(--accent-hover);
+  text-decoration: none;
+}
+
+.cta-sub {
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--ink-muted);
+}
+
+/* Footer */
+.site-footer {
+  text-align: center;
+  padding: 20px;
+  font-size: 13px;
+  color: var(--ink-muted);
+  border-top: 1px solid var(--rule);
+}
+
+.site-footer a { color: var(--ink-muted); text-decoration: underline; text-underline-offset: 2px; }
+
+@media (max-width: 480px) {
+  .site-header { padding: 12px 16px; }
+  main { padding: 20px 16px 40px; }
+}
